@@ -1,0 +1,8 @@
+<launch>
+
+    <!-- launch map-providing and amcl-localization -->
+    <include file="$(find my_turtlebot_localization)/launch/rosject_amcl_launch.launch" />
+    <!-- launch the service server for calling: spots recording -->
+    <node name="spot_recorder" pkg="my_turtlebot_localization" type="spots_to_file.py" output="screen" />
+
+</launch>

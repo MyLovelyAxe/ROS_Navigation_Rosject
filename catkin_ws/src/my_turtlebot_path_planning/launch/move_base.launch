@@ -1,0 +1,35 @@
+<launch>
+  <!--- Run AMCL, provide map and rviz-->
+  <include file="$(find my_turtlebot_localization)/launch/rosject_amcl_launch.launch" />
+​
+  <!-- Run move_base -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+
+    <param name="base_global_planner" value="navfn/NavfnROS" />
+    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+    <rosparam file="$(find my_turtlebot_path_planning)/config/move_base_params.yaml" command="load" />
+
+    <!-- in the global and local costmap parameters file, different layers are just added.
+    the specific parameters of these layers are defined in the common costmap parameters file -->
+    <rosparam file="$(find my_turtlebot_path_planning)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find my_turtlebot_path_planning)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+
+    <!-- local costmap -->
+    <!-- attention: Do not forget 'ns' !!! -->
+    <rosparam file="$(find my_turtlebot_path_planning)/config/local_costmap_params.yaml" command="load" ns="local_costmap" />
+
+    <!-- global costmap -->
+    <!-- attention: Do not forget 'ns' !!! -->
+    <rosparam file="$(find my_turtlebot_path_planning)/config/global_costmap_params.yaml" command="load" ns="global_costmap" />
+​
+    <!-- other parameters of move_base -->
+    <param name="controller_frequency" value="5.0" />
+    <param name="controller_patience" value="15.0" />
+    
+  </node>
+​
+</launch>
+
+<!-- when apply '2d Nav Goal':
+[ WARN] [1668015443.600002824, 3163.874000000]: The robot's start positionis off the global costmap. Planning will always fail, are you sure the robot has been properly localized? -->
+

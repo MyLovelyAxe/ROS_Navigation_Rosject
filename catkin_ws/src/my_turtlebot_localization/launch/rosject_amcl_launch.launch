@@ -1,0 +1,19 @@
+<launch>
+
+    <!-- provide the map firstly -->
+    <!-- <arg name="map_file_path" default="$(find my_turtlebot_mapping)/map/rosject_map.yaml" />
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file_path)" /> -->
+
+    <include file="$(find my_turtlebot_mapping)/launch/rosject_provide_map.launch" />
+
+    <arg name="scan_topic" default="scan" />>
+
+    <!-- launch amcl to implement localization -->
+    <node name="amcl" pkg="amcl" type="amcl" output="screen">
+        <rosparam file="$(find my_turtlebot_localization)/params/my_turtlebot_amcl_params.yaml" command="load" />
+        <remap from="scan" to="$(arg scan_topic)" />
+    </node>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d /home/user/catkin_ws/src/rosject_rviz_config.rviz" />
+
+</launch>

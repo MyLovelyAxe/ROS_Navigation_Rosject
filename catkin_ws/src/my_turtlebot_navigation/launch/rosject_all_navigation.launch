@@ -1,0 +1,6 @@
+<launch>
+    <!-- launch all necessary stacks: providing maps(gmapping), localization(amcl), path planning(move_base) -->
+    <include file="$(find my_turtlebot_path_planning)/launch/move_base.launch" />
+    <!-- activate the service for getting poses and action for sending goals -->
+    <node name="get_pose_and_send_goal_node" pkg="my_turtlebot_navigation" type="get_pose_and_send_goal.py" output="screen" />
+</launch>

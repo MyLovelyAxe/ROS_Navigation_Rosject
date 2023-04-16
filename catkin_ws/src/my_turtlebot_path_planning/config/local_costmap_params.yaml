@@ -1,0 +1,13 @@
+global_frame: odom
+rolling_window: true
+update_frequency: 5
+
+# width (default: 10): The width of the costmap.
+# heigth (default: 10): The height of the costmap.
+# attention: the costmap cannot be set too small !!!
+width: 10
+height: 10
+
+plugins:
+  - {name: obstacles_laser,           type: "costmap_2d::ObstacleLayer"}
+  - {name: inflation,                 type: "costmap_2d::InflationLayer"}
